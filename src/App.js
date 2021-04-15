@@ -1,23 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import React, { useState } from "react";
+import "./App.css";
+import LoginMenu from "./components/LoginMenu";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Typography from "@material-ui/core/Typography";
+import Link from "@material-ui/core/Link";
+
+const Footer = () => {
+  return (
+    <div>
+      <Typography variant="body2" color="textSecondary" align="center">
+        {"Copyright © "}
+        <Link color="inherit" href="https://ilari.xyz">
+          Etkot Software
+        </Link>{" "}
+        {new Date().getFullYear()}
+        {"."}
+      </Typography>
+    </div>
+  );
+};
 
 function App() {
+  const [token, setToken] = useState();
+
+  if (!token) {
+    return <LoginMenu setToken={setToken} />;
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Router</h1>
+      <BrowserRouter>
+        <Switch>
+          <Route path="/login">
+            <LoginMenu />
+          </Route>
+
+          <Route path="/preferences">
+            <div>Protected page!</div>
+          </Route>
+        </Switch>
+      </BrowserRouter>
+      <Footer></Footer>
     </div>
   );
 }
