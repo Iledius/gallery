@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -11,6 +11,7 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -32,7 +33,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginMenu = () => {
+const loginUser = async (credentials) => {
+  return fetch("http://localhost:8080/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(credentials),
+  }).then((data) => data.json());
+};
+
+const LoginMenu = ({ setToken }) => {
+  const [username, setUserName] = useState();
+  const [password, setPassword] = useState();
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const token = await loginUser({
+      username,
+      password,
+    });
+    setToken(token);
+  };
+
   const classes = useStyles();
   return (
     <Container component="main" maxWidth="xs">
@@ -48,11 +71,12 @@ const LoginMenu = () => {
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            id="username"
+            label="Username"
+            name="username"
+            autoComplete="username"
             autoFocus
+            onChange={(i) => setUserName(i.target.value)}
           />
           <TextField
             variant="outlined"
@@ -63,6 +87,7 @@ const LoginMenu = () => {
             label="Password"
             type="password"
             id="password"
+            onChange={(i) => setPassword(i.target.value)}
             autoComplete="current-password"
           />
           <FormControlLabel
@@ -71,6 +96,7 @@ const LoginMenu = () => {
           />
           <Button
             type="submit"
+            onClick={handleSubmit}
             fullWidth
             variant="contained"
             color="primary"
