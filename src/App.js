@@ -5,6 +5,7 @@ import LoginMenu from "./components/LoginMenu";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
+import useToken from "./utils/useToken";
 
 const Footer = () => {
   return (
@@ -21,9 +22,8 @@ const Footer = () => {
   );
 };
 
-
-function App() {
-  const [token, setToken] = useState();
+const App = () => {
+  const { token, setToken } = useToken();
 
   if (!token) {
     return <LoginMenu setToken={setToken} />;
@@ -46,6 +46,6 @@ function App() {
       <Footer></Footer>
     </div>
   );
-}
+};
 
 export default App;
