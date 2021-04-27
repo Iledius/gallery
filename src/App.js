@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 import useToken from "./utils/useToken";
+import ImageBox from "./components/ImageBox";
 
 const Footer = () => {
   return (
@@ -24,10 +25,11 @@ const Footer = () => {
 
 const App = () => {
   const { token, setToken } = useToken();
+  const elements = ["one", "two", "three"];
 
-  if (!token) {
-    return <LoginMenu setToken={setToken} />;
-  }
+  // if (!token) {
+  //   return <LoginMenu setToken={setToken} />;
+  // }
 
   return (
     <div className="App">
@@ -39,7 +41,7 @@ const App = () => {
           </Route>
 
           <Route path="/preferences">
-            <div>Protected page!</div>
+            <ImageBox />
           </Route>
         </Switch>
       </BrowserRouter>
