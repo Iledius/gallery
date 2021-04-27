@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 import useToken from "./utils/useToken";
 import ImageBox from "./components/ImageBox";
+import UploadBox from "./components/UploadBox";
 
 const Footer = () => {
   return (
@@ -41,6 +42,7 @@ const App = () => {
           </Route>
 
           <Route path="/preferences">
+            <UploadBox></UploadBox>
             <ImageBox />
           </Route>
         </Switch>
